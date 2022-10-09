@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HyperSkill.iml" filepath="$PROJECT_DIR$/.idea/modules/HyperSkill.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.iml" filepath="$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Anti-Fraud System/task/HyperSkill.Anti-Fraud_System-task.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/HyperSkill.util.test.iml" />
+    </modules>
+  </component>
+</project>
