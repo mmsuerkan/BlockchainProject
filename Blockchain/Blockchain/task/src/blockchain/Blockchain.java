@@ -22,9 +22,15 @@ public class Blockchain {
         return blockchain.getLast();
     }
 
+    public LinkedList<Block> getBlockchain() {
+        return blockchain;
+    }
+
     public boolean validateChain() {
         for (int i = 1; i < blockchain.size(); i++) {
-            if (!blockchain.get(i).getPreviousHash().equals(blockchain.get(i - 1).getHash())) {
+            Block currentBlock = blockchain.get(i);
+            Block previousBlock = blockchain.get(i - 1);
+            if (!currentBlock.getPreviousHash().equals(previousBlock.getHash())) {
                 return false;
             }
         }

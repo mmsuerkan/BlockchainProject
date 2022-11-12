@@ -239,6 +239,142 @@ files:
         }
     }
   learner_created: false
+- name: src/blockchain/StringUtil.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.security.MessageDigest;
+
+    public class StringUtil {
+        public static String applySha256(String input){
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                /* Applies sha256 to our input */
+                byte[] hash = digest.digest(input.getBytes("UTF-8"));
+                StringBuilder hexString = new StringBuilder();
+                for (byte elem: hash) {
+                    String hex = Integer.toHexString(0xff & elem);
+                    if(hex.length() == 1) hexString.append('0');
+                    hexString.append(hex);
+                }
+                return hexString.toString();
+            }
+            catch(Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+  learner_created: true
+- name: src/blockchain/Blockchain.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.util.LinkedList;
+
+    public class Blockchain {
+
+        private LinkedList<Block> blockchain;
+
+        public Blockchain() {
+            this.blockchain = new LinkedList<>();
+        }
+
+        public void generateNextBlock() {
+            Block block = new Block(getLatestBlock().getHash());
+            blockchain.add(block);
+        }
+        private Block getLatestBlock() {
+            if(blockchain.size() == 0) {
+                Block block = new Block("0");
+                blockchain.add(block);
+            }
+            return blockchain.getLast();
+        }
+
+        public boolean validateChain() {
+            for (int i = 1; i < blockchain.size(); i++) {
+                if (!blockchain.get(i).getPreviousHash().equals(blockchain.get(i - 1).getHash())) {
+                    throw new RuntimeException("Chain is not valid");
+                }
+            }
+            return true;
+        }
+        public void generate(int numberOfBlock) {
+
+
+            for (int i = 1; i < numberOfBlock; i++) {
+                generateNextBlock();
+            }
+        }
+        public void printBlockChain() {
+            for (Block block : blockchain) {
+                System.out.println(block);
+            }
+        }
+    }
+  learner_created: true
+- name: src/blockchain/Block.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.util.Date;
+    import java.util.concurrent.atomic.AtomicInteger;
+
+    public class Block {
+        private Integer id;
+        private long timestamp;
+        private String previousHash;
+        private String hash;
+
+        private static final AtomicInteger counter = new AtomicInteger(0);
+
+        public Block(String previousHash) {
+            this.id = counter.incrementAndGet();
+            this.timestamp = new Date().getTime();
+            this.previousHash = previousHash;
+            this.hash = calculateHash();
+        }
+
+        public String getPreviousHash() {
+            return previousHash;
+        }
+
+        public String getHash() {
+            return hash;
+        }
+
+        @Override
+        public String toString() {
+            return "Block:" + "\n" +
+                    "Id: " + id + "\n" +
+                    "Timestamp: " + timestamp + "\n" +
+                    "Hash of the previous block: " + "\n" + previousHash + "\n" +
+                    "Hash of the block: " + "\n" + hash + "\n";
+        }
+
+        public String calculateHash() {
+            String block = id + timestamp + previousHash + hash;
+            return StringUtil.applySha256(block);
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5414#comment
-status: Unchecked
-record: -1
+status: Failed
+feedback:
+  message: "Wrong answer in test #1\n\nEvery block should contain 9 lines of data\n\
+    \nPlease find below the output of your program during this failed test.\n\n---\n\
+    \nBlock:\nId: 1\nTimestamp: 1668265642402\nHash of the previous block: \n0\nHash\
+    \ of the block: \n298ad0d74149da0c1ec123671314ee27db68bbab739cdb68a1c45d25a70520f5\n\
+    \nBlock:\nId: 2\nTimestamp: 1668265642407\nHash of the previous block: \n298ad0d74149da0c1ec123671314ee27db68bbab739cdb68a1c45d25a70520f5\n\
+    Hash of the block: \n8d91a9ebc646da967b0aa679f93f1277c7c7b3eca9c1016d3dd9c36f0c8dd406\n\
+    \nBlock:\nId: 3\nTimestamp: 1668265642408\nHash of the previous block: \n8d91a9ebc646da967b0aa679f93f1277c7c7b3eca9c1016d3dd9c36f0c8dd406\n\
+    Hash of the block: \n61f22c8bf4b5e2f3ed73a245685bd515e9099bb18f6f94498e940024b57f7b50\n\
+    \nBlock:\nId: 4\nTimestamp: 1668265642408\nHash of the previous block: \n61f22c8bf4b5e2f3ed73a245685bd515e9099bb18f6f94498e940024b57f7b50\n\
+    Hash of the block: \nf6ef559d9b0ee3b8202d70029715ca5f7366719c8a7a0c391604208631786933\n\
+    \nBlock:\nId: 5\nTimestamp: 1668265642408\nHash of the previous block: \nf6ef559d9b0ee3b8202d70029715ca5f7366719c8a7a0c391604208631786933\n\
+    Hash of the block: \n1440489318366b7a7ea137b52762f6baa979fec2852637712cee52ba9c5aa458"
+  time: "Sat, 12 Nov 2022 15:07:22 UTC"
+record: 2
