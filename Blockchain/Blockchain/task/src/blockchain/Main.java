@@ -2,6 +2,8 @@ package blockchain;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Blockchain blockchain = new Blockchain();
+        blockchain.generate(5);
+        blockchain.printBlockChain();
     }
 }
