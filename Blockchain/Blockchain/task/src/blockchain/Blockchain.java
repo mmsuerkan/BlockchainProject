@@ -1,53 +1,62 @@
 package blockchain;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-public class Blockchain {
+public class Blockchain implements Serializable {
+    private static final long serialVersionUID = 3705442926703754261L;
+    private final List<Block> blocks;
+    private final int zeroes;
 
-    private LinkedList<Block> blockchain;
-    private int numberOfZeros;
-
-    public Blockchain(int numberOfZeros) {
-        this.blockchain = new LinkedList<>();
-        this.numberOfZeros = numberOfZeros;
+    public static Blockchain getInstance(int zeroes) {
+        return new Blockchain(zeroes);
     }
 
-    public void generateNextBlock() {
-        Block block = new Block(getLatestBlock().getHash(), numberOfZeros);
-        blockchain.add(block);
+    private Blockchain(int zeroes) {
+        this.blocks = new ArrayList<>();
+        this.zeroes = zeroes;
     }
-    private Block getLatestBlock() {
-        if(blockchain.isEmpty()) {
-            Block block = new Block("0", numberOfZeros);
-            blockchain.add(block);
+
+    @Override
+    public String toString() {
+        final var stringBuilder = new StringBuilder();
+        for (var block : blocks) {
+            stringBuilder.append(block).append("\n\n");
         }
-        return blockchain.getLast();
+        return String.valueOf(stringBuilder);
     }
 
-    public LinkedList<Block> getBlockchain() {
-        return blockchain;
+    public void generateBlocks(int blocksNumber) {
+        for (var i = 0; i < blocksNumber; i++) {
+            generateBlock();
+        }
     }
 
-    public boolean validateChain() {
-        for (int i = 1; i < blockchain.size(); i++) {
-            Block currentBlock = blockchain.get(i);
-            Block previousBlock = blockchain.get(i - 1);
-            if (!currentBlock.getPreviousHash().equals(previousBlock.getHash())) {
-                return false;
+    private void generateBlock() {
+        blocks.add(Block.getProved(
+                blocks.size(),
+                blocks.isEmpty() ? "0" : blocks.get(blocks.size() - 1).getBlockHash(),
+                zeroes));
+        try {
+            SerializationUtil.serialize(this, "./Database.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public boolean isValid() {
+        for (var i = 0; i < blocks.size(); i++) {
+            if (i == 0) {
+                if (!blocks.get(i).getPrevBlockHash().equals("0")) return false;
+            } else {
+                if (!blocks.get(i).getPrevBlockHash().equals(blocks.get(i - 1).getBlockHash())) return false;
             }
+            if (!blocks.get(i).isProved(zeroes)) return false;
         }
         return true;
-    }
-    public void generate(int numberOfBlock) {
-
-
-        for (int i = 1; i < numberOfBlock; i++) {
-            generateNextBlock();
-        }
-    }
-    public void printBlockChain() {
-        for (Block block : blockchain) {
-            System.out.println(block);
-        }
     }
 }
