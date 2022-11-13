@@ -6,57 +6,93 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Blockchain implements Serializable {
-    private static final long serialVersionUID = 3705442926703754261L;
-    private final List<Block> blocks;
-    private final int zeroes;
+class BlockChain implements Serializable {
+    private static final long serialVersionUID = 9L;
+    ArrayList<Block> blocks = new ArrayList<>();
+    private int zeroesInHash;
 
-    public static Blockchain getInstance(int zeroes) {
-        return new Blockchain(zeroes);
+    public int getZeroesInHash() {
+        return zeroesInHash;
     }
 
-    private Blockchain(int zeroes) {
-        this.blocks = new ArrayList<>();
-        this.zeroes = zeroes;
+    public int size() {
+        return blocks.size();
     }
 
-    @Override
-    public String toString() {
-        final var stringBuilder = new StringBuilder();
-        for (var block : blocks) {
-            stringBuilder.append(block).append("\n\n");
+    BlockChain(int zeroesInHash) {
+        this.zeroesInHash = zeroesInHash;
+    }
+
+
+    Block getBlockBy(int id) {
+        return blocks.get(id - 1);
+    }
+
+    Block getLastBlock() {
+        return (size() > 0) ? blocks.get(size() - 1) : null;
+    }
+
+    void add(Block block) {
+        if (canAdd(block)) {
+            blocks.add(block);
+            adjustZeroesInHash();
         }
-        return String.valueOf(stringBuilder);
     }
 
-    public void generateBlocks(int blocksNumber) {
-        for (var i = 0; i < blocksNumber; i++) {
-            generateBlock();
-        }
+    void adjustZeroesInHash() {
+        long elapsedTime = Stopwatch.getElapsedSeconds();
+        printGenerationTimeMsg(elapsedTime);
+        if (elapsedTime > 60) {
+            zeroesInHash -= 1;
+            System.out.printf("N was decreased to %d\n\n", zeroesInHash);
+        } else if (elapsedTime < 10) {
+            zeroesInHash += 1;
+            System.out.printf("N was increased to %d\n\n", zeroesInHash);
+        } else
+            System.out.println("N stays the same\n\n");
     }
 
-    private void generateBlock() {
-        blocks.add(Block.getProved(
-                blocks.size(),
-                blocks.isEmpty() ? "0" : blocks.get(blocks.size() - 1).getBlockHash(),
-                zeroes));
-        try {
-            SerializationUtil.serialize(this, "./Database.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    private static void printGenerationTimeMsg(long sec) {
+        System.out.printf("Block was generating for %d seconds\n", sec);
     }
 
-    public boolean isValid() {
-        for (var i = 0; i < blocks.size(); i++) {
-            if (i == 0) {
-                if (!blocks.get(i).getPrevBlockHash().equals("0")) return false;
-            } else {
-                if (!blocks.get(i).getPrevBlockHash().equals(blocks.get(i - 1).getBlockHash())) return false;
+    boolean canAdd(Block block) {
+        return block.hasValid(zeroesInHash) & canHaveValid(block);
+    }
+
+
+    boolean canHaveValid(Block block) {
+        int id = block.id;
+        boolean isValid = true;
+        if (id > 1) {
+            String previousHash = block.previousHash;
+            Block previousBlock = getBlockBy(id - 1);
+            String hash = previousBlock.generateHash();
+            if (!hash.equals(previousHash)) {
+                isValid = false;
             }
-            if (!blocks.get(i).isProved(zeroes)) return false;
         }
-        return true;
+        return isValid;
     }
+
+
+    boolean isValid() {
+        boolean chainIsValid = true;
+        for (Block block : blocks) {
+            if (!canHaveValid(block)) {
+                chainIsValid = false;
+                break;
+            }
+        }
+        return chainIsValid;
+    }
+
+    void printAllBlock() {
+        for (Block block : blocks
+        ) {
+            block.printInfo();
+            System.out.println();
+        }
+    }
+
 }
