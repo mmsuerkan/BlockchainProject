@@ -22,6 +22,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/build/tmp/Blockchain.Blockchain-task-build-tmp.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/out/Blockchain.Blockchain-task-out.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/Blockchain.Blockchain-task.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/Blockchain.Blockchain-task.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Blockchain/task/Blockchain.Blockchain-task.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Blockchain/task/Blockchain.Blockchain-task.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/Blockchain.util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/Blockchain.util.iml" />

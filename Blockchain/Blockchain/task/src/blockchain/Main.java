@@ -1,8 +1,14 @@
 package blockchain;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Blockchain blockchain = new Blockchain();
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Enter how many zeros the hash must start with: ");
+        int numberOfZeros = keyboard.nextInt();
+        System.out.println();
+        Blockchain blockchain = new Blockchain(numberOfZeros);
         blockchain.generate(5);
         if(blockchain.validateChain()) {
             blockchain.printBlockChain();

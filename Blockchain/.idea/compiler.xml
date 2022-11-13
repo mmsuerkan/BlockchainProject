@@ -8,6 +8,7 @@
       <module name="Blockchain.Blockchain-task-build-reports-tests.main" target="11" />
       <module name="Blockchain.Blockchain-task-build-test-results.main" target="11" />
       <module name="Blockchain.Blockchain-task-build-tmp.main" target="11" />
+      <module name="Blockchain.Blockchain-task-out.main" target="11" />
       <module name="Blockchain.Blockchain-task.main" target="11" />
       <module name="Blockchain.util.main" target="11" />
     </bytecodeTargetLevel>

@@ -5,18 +5,20 @@ import java.util.LinkedList;
 public class Blockchain {
 
     private LinkedList<Block> blockchain;
+    private int numberOfZeros;
 
-    public Blockchain() {
+    public Blockchain(int numberOfZeros) {
         this.blockchain = new LinkedList<>();
+        this.numberOfZeros = numberOfZeros;
     }
 
     public void generateNextBlock() {
-        Block block = new Block(getLatestBlock().getHash());
+        Block block = new Block(getLatestBlock().getHash(), numberOfZeros);
         blockchain.add(block);
     }
     private Block getLatestBlock() {
-        if(blockchain.size() == 0) {
-            Block block = new Block("0");
+        if(blockchain.isEmpty()) {
+            Block block = new Block("0", numberOfZeros);
             blockchain.add(block);
         }
         return blockchain.getLast();
